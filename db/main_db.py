@@ -1,11 +1,12 @@
 import sqlite3
 from datetime import datetime
 from . import queries
-import config
+
+PATH_DB = 'db/todo.db'
 
 
 def init_db():
-    conn = sqlite3.connect(config.path_db)
+    conn = sqlite3.connect(PATH_DB)
     cursor = conn.cursor()
     cursor.execute(queries.create_tasks)
     print('БД подключена')
@@ -14,7 +15,7 @@ def init_db():
 
 
 def add_task(task):
-    conn = sqlite3.connect(config.path_db)
+    conn = sqlite3.connect(PATH_DB)
     cursor = conn.cursor()
     date = datetime.now().strftime('%d.%m.%Y %H:%M')
     cursor.execute(queries.insert_task, (task, date))
@@ -25,7 +26,7 @@ def add_task(task):
 
 
 def get_tasks():
-    conn = sqlite3.connect(config.path_db)
+    conn = sqlite3.connect(PATH_DB)
     cursor = conn.cursor()
     cursor.execute(queries.select_tasks)
     tasks = cursor.fetchall()
